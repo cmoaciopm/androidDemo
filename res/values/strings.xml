@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="app_name">Demo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="button_start_new_activity">Start a new activity</string>
+    
+    <!--  -->
+    <string name="activity_sample_code">Anmin Demos</string>
+    
+    <string name="activity_config_change">Activity/Config change</string>
+    <string name="text_message">common message</string>
+    
+    <string name="activity_lru_cache">Util/LRU cache</string>
+</resources>
