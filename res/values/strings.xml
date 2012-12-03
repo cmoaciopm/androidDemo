@@ -14,4 +14,8 @@
     <string name="text_message">common message</string>
     
     <string name="activity_lru_cache">Util/LRU cache</string>
+    
+    <string name="activity_screen_config">Resources/Screen config</string>
+    <string name="text_screen_density">Screen density is %1$s</string>
+    <string name="text_screen_category">Screen category is %1$s</string>
 </resources>

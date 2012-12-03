@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="17" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -38,6 +38,15 @@
                 <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
             </intent-filter>
         </activity>
+        
+		<activity android:name=".resources.ScreenConfigActivity"
+            android:label="@string/activity_screen_config">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
         
     </application>
 
