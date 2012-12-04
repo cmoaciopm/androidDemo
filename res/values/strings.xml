@@ -18,4 +18,8 @@
     <string name="activity_screen_config">Resources/Screen config</string>
     <string name="text_screen_density">Screen density is %1$s</string>
     <string name="text_screen_category">Screen category is %1$s</string>
+    
+    <string name="activity_sliding_drawer">View/Sliding drawer</string>
+    <string name="text_sliding_drawer">There is a Sliding drawer here!</string>
+    <string name="text_sliding_drawer_content">This is Sliding drawer content.</string>
 </resources>

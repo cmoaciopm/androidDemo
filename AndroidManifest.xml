@@ -47,6 +47,13 @@
             </intent-filter>
         </activity>
         
+		<activity android:name=".view.SlidingDrawerActivity"
+            android:label="@string/activity_sliding_drawer">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
         
     </application>
 
