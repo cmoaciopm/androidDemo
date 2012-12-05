@@ -22,4 +22,20 @@
     <string name="activity_sliding_drawer">View/Sliding drawer</string>
     <string name="text_sliding_drawer">There is a Sliding drawer here!</string>
     <string name="text_sliding_drawer_content">This is Sliding drawer content.</string>
+    
+    <string name="activity_drag_drop_color">View/Drag drop color</string>
+    <string name="text_red">red</string>
+    <string name="text_green">green</string>
+    <string name="text_blue">blue</string>
+    <string name="text_yellow">yellow</string>
+    
+    <string name="activity_expandable_list_view">View/Expandable ListView</string>
+    
+    <string name="activity_sticky_header_list_view">View/Sticky Header ListView</string>
+    
+    <string name="activity_move_in_touch">View/Move in Touch</string>
+    <string name="text_move_left">move left</string>
+    <string name="text_move_right">move right</string>
+    <string name="text_move_up">move up</string>
+    <string name="text_move_down">move down</string>
 </resources>

@@ -4,7 +4,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <application
@@ -55,6 +55,37 @@
             </intent-filter>
         </activity>
         
+		<activity android:name=".view.DragDropColorActivity"
+            android:label="@string/activity_drag_drop_color">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
+		<activity android:name=".view.ExpandableListViewActivity"
+            android:label="@string/activity_expandable_list_view">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
+		<activity android:name=".view.StickyHeaderListViewActivity"
+            android:label="@string/activity_sticky_header_list_view">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
+		<activity android:name=".view.MoveInTouchActivity"
+            android:label="@string/activity_move_in_touch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

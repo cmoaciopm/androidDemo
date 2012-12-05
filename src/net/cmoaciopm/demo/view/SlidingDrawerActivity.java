@@ -15,6 +15,7 @@ public class SlidingDrawerActivity extends Activity {
 		setContentView(R.layout.sliding_drawer);
 		
 		mSlidingDrawer = (SlidingDrawer)findViewById(R.id.sliding_drawer);
+		
 	}
 
 }
