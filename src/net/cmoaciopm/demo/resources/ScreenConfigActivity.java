@@ -37,9 +37,6 @@ public class ScreenConfigActivity extends Activity {
 		case DisplayMetrics.DENSITY_XHIGH:
 			mTextViewScreenDpi.setText(getString(R.string.text_screen_density, "XHigh"));
 			break;
-		case DisplayMetrics.DENSITY_XXHIGH:
-			mTextViewScreenDpi.setText(getString(R.string.text_screen_density, "XXHigh"));
-			break;
 		default:
 			mTextViewScreenDpi.setText(getString(R.string.text_screen_density, dm.densityDpi));
 		}
