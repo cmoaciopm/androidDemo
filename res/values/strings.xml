@@ -30,6 +30,7 @@
     <string name="text_yellow">yellow</string>
     
     <string name="activity_expandable_list_view">View/Expandable ListView</string>
+    <string name="activity_custom_sliding_drawer">View/Custom Sliding Drawer</string>
     
     <string name="activity_sticky_header_list_view">View/Sticky Header ListView</string>
     
