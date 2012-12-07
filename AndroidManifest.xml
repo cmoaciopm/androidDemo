@@ -86,6 +86,14 @@
                 <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
             </intent-filter>
         </activity>
+        
+		<activity android:name=".framework.InterceptDispatchDrawActivity"
+            android:label="@string/activity_intercept_dispatch_draw">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

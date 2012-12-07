@@ -38,4 +38,6 @@
     <string name="text_move_right">move right</string>
     <string name="text_move_up">move up</string>
     <string name="text_move_down">move down</string>
+    
+    <string name="activity_intercept_dispatch_draw">Framework/Intercept Dispatch Draw</string>
 </resources>
