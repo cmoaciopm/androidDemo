@@ -102,6 +102,15 @@
                 <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".view.SideBarScrollActivity"
+            android:label="@string/activity_side_bar_scroll_view">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+		
 		
     </application>
 

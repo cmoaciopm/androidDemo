@@ -31,6 +31,7 @@
     
     <string name="activity_expandable_list_view">View/Expandable ListView</string>
     <string name="activity_custom_sliding_drawer">View/Custom Sliding Drawer</string>
+    <string name="activity_side_bar_scroll_view">View/Side Bar Scroll View</string>
     
     <string name="activity_sticky_header_list_view">View/Sticky Header ListView</string>
     
