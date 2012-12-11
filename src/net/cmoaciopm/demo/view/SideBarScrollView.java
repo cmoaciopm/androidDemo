@@ -26,18 +26,22 @@ package net.cmoaciopm.demo.view;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 
-public class SideBarScrollView extends HorizontalScrollView
+public class SideBarScrollView extends HorizontalScrollView implements OnGestureListener
 {
    private SizeCallback mSizeCallback;
    private int mScrollToViewIdx;
    private int mScrollToPos;
    private View[] mChildren;
+   private GestureDetector mGestureDetector = new GestureDetector(this.getContext(), this);
    
    public SideBarScrollView(Context context)
    {
@@ -108,10 +112,7 @@ public class SideBarScrollView extends HorizontalScrollView
       this.mScrollToViewIdx = scrollToViewIdx;
       this.mSizeCallback = sizeCallback;
       
-      MyOnGlobalLayoutListener listener = 
-            new MyOnGlobalLayoutListener(children,
-                                         scrollToViewIdx,
-                                         sizeCallback);
+      MyOnGlobalLayoutListener listener = new MyOnGlobalLayoutListener();
       this.getViewTreeObserver().addOnGlobalLayoutListener(listener);
    }
    
@@ -132,39 +133,58 @@ public class SideBarScrollView extends HorizontalScrollView
       this.smoothScrollTo(mScrollToPos, 0);
    }
    
+   public boolean isExpand() {
+      return getScrollX()==0;
+   }
+   
    @Override
    public boolean
-   onInterceptTouchEvent(MotionEvent ev)
+   onInterceptTouchEvent(MotionEvent event)
    {
-      //Do not intercept touch event
+      if(isExpand()
+            && event.getRawX()>mScrollToPos) {
+         //If is expaned, do not respond touch event which x is greater than mScrollToPos
+         return true;
+      }
+      
+      if(!isExpand()
+            && event.getAction()==MotionEvent.ACTION_DOWN
+            && event.getRawX()<this.getContext().getResources().getDisplayMetrics().widthPixels*2/10) {
+         //TODO If is not expanded, respond touch event only when x is smaller than some config value
+         return true;
+      }
+      
       return false;
    }
    
    @Override
    public boolean
-   onTouchEvent(MotionEvent ev)
+   onTouchEvent(MotionEvent event)
    {
-      //Do not handle touch event here
-      return false;
+      if(!isExpand()
+            && event.getAction()==MotionEvent.ACTION_DOWN
+            && event.getRawX()>this.getContext().getResources().getDisplayMetrics().widthPixels*2/10) {
+         //TODO
+         return false;
+      }
+      
+      boolean result = mGestureDetector.onTouchEvent(event);
+      
+      if(event.getAction()==MotionEvent.ACTION_UP) {
+         if(event.getRawX() > mScrollToPos/2) {
+            scrollToRight();
+         } else {
+            scrollToLeft();
+         }
+         return true;
+      }
+      
+      return result;
    }
    
    class MyOnGlobalLayoutListener
    implements OnGlobalLayoutListener
    {
-      private View[] children;
-      private int scrollToViewIdx;
-      private int scrollToViewPos;
-      private SizeCallback sizeCallback;
-      
-      public MyOnGlobalLayoutListener(View[] children,
-                                      int scrollToViewIdx,
-                                      SizeCallback sizeCallback)
-      {
-         this.children = children;
-         this.scrollToViewIdx = scrollToViewIdx;
-         this.sizeCallback = sizeCallback;
-      }
-      
       @Override
       public void
       onGlobalLayout()
@@ -176,13 +196,13 @@ public class SideBarScrollView extends HorizontalScrollView
          
          final int w = view.getMeasuredWidth();
          final int h = view.getMeasuredHeight();
-         for (int i = 0; i < children.length; i++) {
-            int[] dim = sizeCallback.getViewSize(i, w, h);
-            children[i].setVisibility(View.VISIBLE);
+         for (int i = 0; i < mChildren.length; i++) {
+            int[] dim = mSizeCallback.getViewSize(i, w, h);
+            mChildren[i].setVisibility(View.VISIBLE);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dim[0], dim[1]);
-            ((ViewGroup)view.getChildAt(0)).addView(children[i], params);
-            if (i < scrollToViewIdx) {
-               scrollToViewPos += dim[0];
+            ((ViewGroup)view.getChildAt(0)).addView(mChildren[i], params);
+            if (i < mScrollToViewIdx) {
+               mScrollToPos += dim[0];
             }
             
             // For some reason we need to post this action, rather than call
@@ -193,7 +213,7 @@ public class SideBarScrollView extends HorizontalScrollView
                public void
                run()
                {
-                  view.scrollTo(scrollToViewPos, 0);
+                  view.scrollTo(mScrollToPos, 0);
                }
             });
          }
@@ -226,5 +246,48 @@ public class SideBarScrollView extends HorizontalScrollView
        *-----------------------------------------------------------------------------
        */
       public int[] getViewSize(int idx, int w, int h);
+   }
+
+   @Override
+   public boolean onDown(MotionEvent e)
+   {
+      Log.d("agong", "onDown");
+      return true;
+   }
+
+   @Override
+   public void onShowPress(MotionEvent e)
+   {
+      Log.d("agong", "onShowPress");
+   }
+
+   @Override
+   public boolean onSingleTapUp(MotionEvent e)
+   {
+      Log.d("agong", "onSingleTapUp");
+      return false;
+   }
+
+   @Override
+   public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+         float distanceY)
+   {
+      Log.d("agong", "onScroll");
+      scrollBy((int)distanceX, 0);
+      return true;
+   }
+
+   @Override
+   public void onLongPress(MotionEvent e)
+   {
+      Log.d("agong", "onLongPress");
+   }
+
+   @Override
+   public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+         float velocityY)
+   {
+      Log.d("agong", "onFling");
+      return false;
    }
 }

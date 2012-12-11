@@ -19,8 +19,8 @@
     <net.cmoaciopm.demo.view.SideBarScrollView
         android:id="@+id/side_bar_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
+        android:layout_height="match_parent"
+        android:scrollbars="none">        
         <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -2,11 +2,17 @@ package net.cmoaciopm.demo.view;
 
 import net.cmoaciopm.demo.R;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class SideBarScrollActivity extends Activity {
 
@@ -23,17 +29,39 @@ public class SideBarScrollActivity extends Activity {
        mButtonScrollLeft = (Button)findViewById(android.R.id.button1);
        mButtonScrollRight = (Button)findViewById(android.R.id.button2);
        
-       View leftView = new View(this);
-       ViewGroup.LayoutParams lp1 = new ViewGroup.LayoutParams(300, ViewGroup.LayoutParams.MATCH_PARENT);
-       leftView.setLayoutParams(lp1);
-       leftView.setBackgroundColor(Color.BLUE);
+       View sideBarView = getLayoutInflater().inflate(R.layout.side_bar, null);
+       ListView listView = (ListView)sideBarView.findViewById(android.R.id.list);
+       ArrayAdapter adapter = new ArrayAdapter<String>(this,
+             android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.colors));
+       listView.setAdapter(adapter);
+       listView.setOnItemClickListener(new OnItemClickListener() {
+         @Override
+         public void onItemClick(AdapterView<?> parent, View view,
+               int position, long id)
+         {
+            Toast.makeText(SideBarScrollActivity.this, position + " is clicked", Toast.LENGTH_SHORT).show();
+         }
+       });
        
-       View rightView = new View(this);
-       ViewGroup.LayoutParams lp2 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-       rightView.setLayoutParams(lp2);
-       rightView.setBackgroundColor(Color.RED);
+       View contentView = getLayoutInflater().inflate(R.layout.drag_drop_color, null);
+       TextView buttonRed = (TextView)contentView.findViewById(R.id.textview_red);
+       TextView buttonGreen = (TextView)contentView.findViewById(R.id.textview_green);
+       TextView buttonBlue = (TextView)contentView.findViewById(R.id.textview_blue);
+       TextView buttonYellow = (TextView)contentView.findViewById(R.id.textview_yellow);
        
-       mSideBarScrollView.initViews(new View[]{leftView, rightView}, 1, new SideBarScrollView.SizeCallback() {
+       OnClickListener listener = new OnClickListener() {
+         @Override
+         public void onClick(View v)
+         {
+            Toast.makeText(SideBarScrollActivity.this, v.getId()+"", Toast.LENGTH_SHORT).show();
+         }
+       };
+       buttonRed.setOnClickListener(listener);
+       buttonGreen.setOnClickListener(listener);
+       buttonBlue.setOnClickListener(listener);
+       buttonYellow.setOnClickListener(listener);
+       
+       mSideBarScrollView.initViews(new View[]{sideBarView, contentView}, 1, new SideBarScrollView.SizeCallback() {
          
          @Override
          public int[] getViewSize(int idx, int w, int h)
@@ -46,7 +74,25 @@ public class SideBarScrollActivity extends Activity {
             }
             return null;
          }
-      });
+       });
+       
+       mButtonScrollLeft.setOnClickListener(new OnClickListener() {
+         @Override
+         public void onClick(View v)
+         {
+            mSideBarScrollView.scrollToLeft();
+         }
+       });
+       
+       mButtonScrollRight.setOnClickListener(new OnClickListener() {
+          @Override
+          public void onClick(View v)
+          {
+             mSideBarScrollView.scrollToRight();
+          }
+        });
+       
        
     }
+    
 }
