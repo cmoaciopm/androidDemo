@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <string-array name="four_pop">
+        <item>Dehua Liu</item>
+        <item>Xueyou Zhang</item>
+        <item>Fucheng Guo</item>
+        <item>Ming Li</item>
+    </string-array>
+    
     <string-array name="colors">
         <item>red</item>
         <item>orange</item>
