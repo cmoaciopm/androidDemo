@@ -32,6 +32,7 @@
     <string name="activity_expandable_list_view">View/Expandable ListView</string>
     <string name="activity_expandable_list_view2">View/Expandable ListView2</string>
     <string name="text_fold_unfold">fold/unfold</string>
+    <string name="activity_expandable_list_view3">View/Expandable ListView3</string>
     <string name="activity_custom_sliding_drawer">View/Custom Sliding Drawer</string>
     <string name="activity_side_bar_scroll_view">View/Side Bar Scroll View</string>
     

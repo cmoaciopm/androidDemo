@@ -79,6 +79,14 @@
             </intent-filter>
         </activity>
 		
+        <activity android:name=".view.ExpandableListViewActivity3"
+            android:label="@string/activity_expandable_list_view3">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
 		<activity android:name=".view.StickyHeaderListViewActivity"
             android:label="@string/activity_sticky_header_list_view">
             <intent-filter>
