@@ -35,13 +35,14 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 
-public class SideBarScrollView extends HorizontalScrollView implements OnGestureListener
+public class SideBarScrollView extends HorizontalScrollView implements OnGestureListener, OnGlobalLayoutListener
 {
    private SizeCallback mSizeCallback;
    private int mScrollToViewIdx;
    private int mScrollToPos;
    private View[] mChildren;
    private GestureDetector mGestureDetector = new GestureDetector(this.getContext(), this);
+   private boolean hasMeasured = false;
    
    public SideBarScrollView(Context context)
    {
@@ -112,8 +113,7 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       this.mScrollToViewIdx = scrollToViewIdx;
       this.mSizeCallback = sizeCallback;
       
-      MyOnGlobalLayoutListener listener = new MyOnGlobalLayoutListener();
-      this.getViewTreeObserver().addOnGlobalLayoutListener(listener);
+      this.getViewTreeObserver().addOnGlobalLayoutListener(this);
    }
    
    public void
@@ -171,7 +171,7 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       boolean result = mGestureDetector.onTouchEvent(event);
       
       if(event.getAction()==MotionEvent.ACTION_UP) {
-         if(event.getRawX() > mScrollToPos/2) {
+         if(Math.abs(getScrollX()) < mScrollToPos/2) {
             scrollToRight();
          } else {
             scrollToLeft();
@@ -182,40 +182,29 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       return result;
    }
    
-   class MyOnGlobalLayoutListener
-   implements OnGlobalLayoutListener
-   {
-      @Override
-      public void
-      onGlobalLayout()
-      {
-         final SideBarScrollView view = SideBarScrollView.this;
-         view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-         
-         ((ViewGroup)view.getChildAt(0)).removeAllViews();
-         
-         final int w = view.getMeasuredWidth();
-         final int h = view.getMeasuredHeight();
-         for (int i = 0; i < mChildren.length; i++) {
-            int[] dim = mSizeCallback.getViewSize(i, w, h);
-            mChildren[i].setVisibility(View.VISIBLE);
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dim[0], dim[1]);
-            ((ViewGroup)view.getChildAt(0)).addView(mChildren[i], params);
-            if (i < mScrollToViewIdx) {
-               mScrollToPos += dim[0];
+   @Override
+   public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+      super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+      int width = getMeasuredWidth();
+      int height = getMeasuredHeight();
+      synchronized(this) {
+         if(!hasMeasured && width!=0 && height!=0) {
+            Log.d("agong", "onLayout");
+            hasMeasured = true;
+            ((ViewGroup)this.getChildAt(0)).removeAllViews();
+            
+            final int w = getMeasuredWidth();
+            final int h = getMeasuredHeight();
+            for (int i = 0; i < mChildren.length; i++) {
+               int[] dim = mSizeCallback.getViewSize(i, w, h);
+               mChildren[i].setVisibility(View.VISIBLE);
+               ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dim[0], dim[1]);
+               ((ViewGroup)this.getChildAt(0)).addView(mChildren[i], params);
+               if (i < mScrollToViewIdx) {
+                  mScrollToPos += dim[0];
+               }
             }
             
-            // For some reason we need to post this action, rather than call
-            // immediately.
-            // If we try immediately, it will not scroll.
-            new Handler().post(new Runnable() {
-               @Override
-               public void
-               run()
-               {
-                  view.scrollTo(mScrollToPos, 0);
-               }
-            });
          }
       }
       
@@ -289,5 +278,24 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
    {
       Log.d("agong", "onFling");
       return false;
+   }
+   
+   
+   @Override
+   public void onGlobalLayout()
+   {
+      /*
+      if(getMeasuredWidth()!=0 && getMeasuredHeight()!=0) {
+         this.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+         
+         new Handler().post(new Runnable() {
+            @Override
+            public void
+            run()
+            {
+               scrollTo(mScrollToPos, 0);
+            }
+         });
+      }*/
    }
 }
