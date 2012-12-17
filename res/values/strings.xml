@@ -45,4 +45,6 @@
     <string name="text_move_down">move down</string>
     
     <string name="activity_intercept_dispatch_draw">Framework/Intercept Dispatch Draw</string>
+    <string name="activity_view_measure">Framework/Measure View</string>
+    <string name="text_show_hidden_view">Show hidden view</string>
 </resources>

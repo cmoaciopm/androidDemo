@@ -111,6 +111,14 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".framework.ViewMeasureActivity"
+            android:label="@string/activity_view_measure">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
 		<activity android:name=".view.SlidingDrawerCustomActivity"
             android:label="@string/activity_custom_sliding_drawer">
             <intent-filter>
