@@ -31,13 +31,13 @@ public class ExpandableListViewActivity3 extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.expand_listview2);
+		setContentView(R.layout.expand_listview3);
 		
 		mButton = (Button)findViewById(android.R.id.button1);
 		mListView = (ListView)findViewById(android.R.id.list);
 		
-		mArray = getResources().getStringArray(R.array.four_pop);
-		mArray2 = getResources().getStringArray(R.array.colors);
+		mArray2 = getResources().getStringArray(R.array.four_pop);
+		mArray = getResources().getStringArray(R.array.colors);
       
 		ArrayList<String> list = new ArrayList<String>();
 		for(int i=0; i<mArray.length; i++) {

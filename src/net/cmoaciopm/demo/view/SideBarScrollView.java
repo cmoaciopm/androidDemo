@@ -113,6 +113,11 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       this.mScrollToViewIdx = scrollToViewIdx;
       this.mSizeCallback = sizeCallback;
       
+      //Must add child view here, if not, initial position will not take effect
+      for(int i=0; i<children.length; i++) {
+         ((ViewGroup)getChildAt(0)).addView(children[i]);
+      }
+      
       this.getViewTreeObserver().addOnGlobalLayoutListener(this);
    }
    
@@ -189,7 +194,7 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       int height = getMeasuredHeight();
       synchronized(this) {
          if(!hasMeasured && width!=0 && height!=0) {
-            Log.d("agong", "onLayout");
+            Log.d("agong", "onMeasure");
             hasMeasured = true;
             ((ViewGroup)this.getChildAt(0)).removeAllViews();
             
@@ -280,12 +285,11 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       return false;
    }
    
-   
    @Override
    public void onGlobalLayout()
    {
-      /*
       if(getMeasuredWidth()!=0 && getMeasuredHeight()!=0) {
+         //We set initial position here
          this.getViewTreeObserver().removeGlobalOnLayoutListener(this);
          
          new Handler().post(new Runnable() {
@@ -296,6 +300,6 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
                scrollTo(mScrollToPos, 0);
             }
          });
-      }*/
+      }
    }
 }
