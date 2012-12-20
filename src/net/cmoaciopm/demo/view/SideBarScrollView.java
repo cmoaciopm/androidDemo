@@ -24,7 +24,6 @@
 package net.cmoaciopm.demo.view;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -32,10 +31,11 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 
-public class SideBarScrollView extends HorizontalScrollView implements OnGestureListener, OnGlobalLayoutListener
+public class SideBarScrollView extends HorizontalScrollView implements OnGestureListener
 {
    private SizeCallback mSizeCallback;
    private int mScrollToViewIdx;
@@ -118,7 +118,6 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
          ((ViewGroup)getChildAt(0)).addView(children[i]);
       }
       
-      this.getViewTreeObserver().addOnGlobalLayoutListener(this);
    }
    
    public void
@@ -189,30 +188,54 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
    
    @Override
    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-      super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-      int width = getMeasuredWidth();
-      int height = getMeasuredHeight();
+      int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+      int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+      int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+      int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+
       synchronized(this) {
-         if(!hasMeasured && width!=0 && height!=0) {
+         if(widthSize!=0 && heightSize!=0) {
             Log.d("agong", "onMeasure");
-            hasMeasured = true;
-            ((ViewGroup)this.getChildAt(0)).removeAllViews();
-            
-            final int w = getMeasuredWidth();
-            final int h = getMeasuredHeight();
+            int totalWidth = 0;
             for (int i = 0; i < mChildren.length; i++) {
-               int[] dim = mSizeCallback.getViewSize(i, w, h);
-               mChildren[i].setVisibility(View.VISIBLE);
-               ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dim[0], dim[1]);
-               ((ViewGroup)this.getChildAt(0)).addView(mChildren[i], params);
-               if (i < mScrollToViewIdx) {
-                  mScrollToPos += dim[0];
-               }
+               int[] dim = mSizeCallback.getViewSize(i, widthSize, heightSize);
+               totalWidth += dim[0];
             }
             
+            int childWidthSpec = MeasureSpec.makeMeasureSpec(totalWidth, MeasureSpec.EXACTLY);
+            getChildAt(0).measure(childWidthSpec, heightMeasureSpec);
+            
+            for (int i = 0; i < mChildren.length; i++) {
+               int[] dim = mSizeCallback.getViewSize(i, widthSize, heightSize);
+               int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(dim[0], MeasureSpec.EXACTLY);
+               int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(dim[1], MeasureSpec.EXACTLY);
+               mChildren[i].measure(childWidthMeasureSpec, childHeightMeasureSpec);
+            }
+            
+            mScrollToPos = mChildren[0].getMeasuredWidth();
          }
       }
       
+      setMeasuredDimension(widthSize, heightSize);
+   }
+   
+   @Override
+   public void onLayout(boolean changed, int l, int t, int r, int b) {
+      getChildAt(0).layout(0, 0, getChildAt(0).getMeasuredWidth(), b);
+      
+      int ll = 0;
+      int lt = 0;
+      int lr = mChildren[0].getMeasuredWidth();
+      int lb = mChildren[0].getMeasuredHeight();
+      mChildren[0].layout(ll, lt, lr, lb);
+      
+      int rl = lr;
+      int rt = 0;
+      int rr = rl + mChildren[1].getMeasuredWidth();
+      int rb = mChildren[1].getMeasuredHeight();
+      mChildren[1].layout(rl, rt, rr, rb);
+      
+      this.scrollTo(mScrollToPos, 0);
    }
    
    public interface
@@ -285,21 +308,4 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       return false;
    }
    
-   @Override
-   public void onGlobalLayout()
-   {
-      if(getMeasuredWidth()!=0 && getMeasuredHeight()!=0) {
-         //We set initial position here
-         this.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-         
-         new Handler().post(new Runnable() {
-            @Override
-            public void
-            run()
-            {
-               scrollTo(mScrollToPos, 0);
-            }
-         });
-      }
-   }
 }

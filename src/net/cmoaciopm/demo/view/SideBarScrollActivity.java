@@ -68,7 +68,7 @@ public class SideBarScrollActivity extends Activity {
          {
             switch(idx) {
             case 0:
-               return new int[]{300, ViewGroup.LayoutParams.MATCH_PARENT};
+               return new int[]{300, h};
             case 1:
                return new int[]{w, h};
             }
