@@ -80,7 +80,7 @@ public class SideBarScrollActivity extends Activity {
          @Override
          public void onClick(View v)
          {
-            mSideBarScrollView.scrollToLeft();
+            mSideBarScrollView.open();
          }
        });
        
@@ -88,7 +88,7 @@ public class SideBarScrollActivity extends Activity {
           @Override
           public void onClick(View v)
           {
-             mSideBarScrollView.scrollToRight();
+             mSideBarScrollView.close();
           }
         });
        

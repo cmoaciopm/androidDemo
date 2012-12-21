@@ -42,8 +42,8 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
    private int mScrollToPos;
    private View[] mChildren;
    private GestureDetector mGestureDetector = new GestureDetector(this.getContext(), this);
-   private boolean hasMeasured = false;
-   
+   private boolean isOpened = false;
+
    public SideBarScrollView(Context context)
    {
       super(context);
@@ -127,31 +127,33 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
    }
 
    public void
-   scrollToRight()
+   open()
    {
       this.smoothScrollTo(0, 0);
+      isOpened = true;
    }
    
    public void
-   scrollToLeft() {
+   close() {
       this.smoothScrollTo(mScrollToPos, 0);
+      isOpened = false;
    }
    
-   public boolean isExpand() {
-      return getScrollX()==0;
+   public boolean isOpened() {
+      return isOpened;
    }
    
    @Override
    public boolean
    onInterceptTouchEvent(MotionEvent event)
    {
-      if(isExpand()
+      if(isOpened()
             && event.getRawX()>mScrollToPos) {
          //If is expaned, do not respond touch event which x is greater than mScrollToPos
          return true;
       }
       
-      if(!isExpand()
+      if(!isOpened()
             && event.getAction()==MotionEvent.ACTION_DOWN
             && event.getRawX()<this.getContext().getResources().getDisplayMetrics().widthPixels*2/10) {
          //TODO If is not expanded, respond touch event only when x is smaller than some config value
@@ -165,7 +167,7 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
    public boolean
    onTouchEvent(MotionEvent event)
    {
-      if(!isExpand()
+      if(!isOpened()
             && event.getAction()==MotionEvent.ACTION_DOWN
             && event.getRawX()>this.getContext().getResources().getDisplayMetrics().widthPixels*2/10) {
          //TODO
@@ -176,9 +178,9 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       
       if(event.getAction()==MotionEvent.ACTION_UP) {
          if(Math.abs(getScrollX()) < mScrollToPos/2) {
-            scrollToRight();
+            open();
          } else {
-            scrollToLeft();
+            close();
          }
          return true;
       }
@@ -235,7 +237,11 @@ public class SideBarScrollView extends HorizontalScrollView implements OnGesture
       int rb = mChildren[1].getMeasuredHeight();
       mChildren[1].layout(rl, rt, rr, rb);
       
-      this.scrollTo(mScrollToPos, 0);
+      if(isOpened()) {
+         open();
+      } else {
+         close();
+      }
    }
    
    public interface
