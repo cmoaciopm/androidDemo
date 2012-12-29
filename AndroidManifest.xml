@@ -145,7 +145,13 @@
             </intent-filter>
         </activity>
 		
-		
+        <activity android:name=".other.ExpandableListViewActivity"
+            android:label="@string/activity_another_expandable_list_view">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -48,4 +48,7 @@
     <string name="activity_view_measure">Framework/Measure View</string>
     <string name="text_show_hidden_view">Show hidden view</string>
     <string name="activity_view_callback">Framework/View Callback</string>
+    
+    <string name="activity_another_expandable_list_view">Other/Expandable ListView</string>
+    
 </resources>
