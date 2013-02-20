@@ -128,6 +128,14 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".framework.ContextMenuActivity"
+            android:label="@string/activity_context_menu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
 		<activity android:name=".view.SlidingDrawerCustomActivity"
             android:label="@string/activity_custom_sliding_drawer">
             <intent-filter>
