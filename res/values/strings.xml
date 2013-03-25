@@ -7,6 +7,11 @@
 
     <string name="button_start_new_activity">Start a new activity</string>
     
+    <!-- common text -->
+    <string name="text_click_me">Click me!</string>
+    <string name="text_enable">Enable</string>
+    <string name="text_disable">Disable</string>
+    
     <!--  -->
     <string name="activity_sample_code">Anmin Demos</string>
     
@@ -43,12 +48,15 @@
     <string name="text_move_right">move right</string>
     <string name="text_move_up">move up</string>
     <string name="text_move_down">move down</string>
+    <string name="activity_edit_text">View/EditText</string>
     
     <string name="activity_intercept_dispatch_draw">Framework/Intercept Dispatch Draw</string>
     <string name="activity_view_measure">Framework/Measure View</string>
     <string name="text_show_hidden_view">Show hidden view</string>
     <string name="activity_view_callback">Framework/View Callback</string>
     <string name="activity_context_menu">Framework/Context menu</string>
+    <string name="activity_popup_window">Framework/PopupWindow</string>
+    <string name="text_show_popup_window">Show</string>
     
     <string name="activity_another_expandable_list_view">Other/Expandable ListView</string>
     

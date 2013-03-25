@@ -4,7 +4,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="8"
         android:targetSdkVersion="15" />
 
     <application
@@ -103,6 +103,14 @@
             </intent-filter>
         </activity>
         
+		<activity android:name=".view.EditTextActivity"
+		    android:label="@string/activity_edit_text">
+		    <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+		</activity>
+        
 		<activity android:name=".framework.InterceptDispatchDrawActivity"
             android:label="@string/activity_intercept_dispatch_draw">
             <intent-filter>
@@ -130,6 +138,14 @@
         
         <activity android:name=".framework.ContextMenuActivity"
             android:label="@string/activity_context_menu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".framework.PopupWindowActivity"
+            android:label="@string/activity_popup_window">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="net.cmoaciopm.demo.category.ANMIN_SAMPLE_CODE" />
