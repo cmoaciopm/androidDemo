@@ -57,6 +57,7 @@
     <string name="activity_context_menu">Framework/Context menu</string>
     <string name="activity_popup_window">Framework/PopupWindow</string>
     <string name="text_show_popup_window">Show</string>
+    <string name="activity_bitmap">Framework/Bitmap</string>
     
     <string name="activity_another_expandable_list_view">Other/Expandable ListView</string>
     
